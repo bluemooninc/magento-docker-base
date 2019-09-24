@@ -1,4 +1,64 @@
-### Setting Up Magento 2 on Multi-container Architecture Using Docker-Compose tool
+# Setting Up Magento 2 on Multi-container Architecture Using Docker-Compose tool
+
+
+magento2 composerインストール時のマーケットのアカウント登録
+https://qiita.com/kumanizm/items/3e826ff278296f0960ea
+
+Clone Docker files
+https://github.com/webkul/magento2-varnish-docker-compose
+
+docker exec -it apache2 bash
+
+### install Composer
+
+```text
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition /var/www/html/magento
+Username: [YOUR-PUBLIC-KEY]
+Password: [YOUR-PRIVATE-KEY]
+```
+
+### Create database
+
+```text
+CREATE DATABASE magento DEFAULT CHARACTER SET utf8mb4;
+```
+
+### Magento set up
+
+```
+cd magento
+
+bin/magento setup:install \
+--base-url=http://localhost/magento \
+--db-host=mysql_host \
+--db-name=magento \
+--db-user=root \
+--db-password=root \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=admin@admin.com \
+--admin-user=admin \
+--admin-password=admin123 \
+--language=en_US \
+--currency=USD \
+--timezone=America/Chicago \
+--use-rewrites=1
+
+[SUCCESS]: http://localhost/magento/
+[SUCCESS]: http://localhost/magento/admin_?????
+```
+
+### Cronのインストール
+php bin/magento cron:install
+
+### インデックスの貼り直し
+
+php bin/magento indexer:reindex
+
+
 
 This repository corresponds to architecture setup as mentioned in blog https://cloudkul.com/blog/magento-2-docker-compose/.
 
