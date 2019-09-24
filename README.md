@@ -47,6 +47,7 @@ bin/magento setup:install \
 --timezone=America/Chicago \
 --use-rewrites=1
 
+
 [SUCCESS]: http://localhost/magento/
 [SUCCESS]: http://localhost/magento/admin_?????
 ```
@@ -58,6 +59,22 @@ php bin/magento cron:install
 
 php bin/magento indexer:reindex
 
+
+### Cache by Redis
+
+
+Add config setting to magento 
+```
+docker exec -it apache2 bash
+cd magento
+bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=redis_host
+```
+
+Monitering by redis
+```text
+docker exec -it redis_host bash
+redis-cli monitor
+```
 
 
 This repository corresponds to architecture setup as mentioned in blog https://cloudkul.com/blog/magento-2-docker-compose/.
