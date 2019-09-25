@@ -1,4 +1,4 @@
-# Setting Up Magento 2 on Multi-container Architecture Using Docker-Compose tool
+# Docker-compose for Magento2, Varnish5, Redis5, MySQL5.7 
 
 ### Get your developper account
 
