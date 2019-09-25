@@ -26,8 +26,10 @@ RUN apt-get update \
 # Apacheのmod_rewrite有効化
 RUN a2enmod rewrite
 
-# php.iniを読み込ませる
+# Copy php.ini and httpd files
 COPY ./php.ini /usr/local/etc/php
+COPY ./ports.conf /etc/apache2
+COPY ./000-default.conf /etc/apache2/sites-enabled
 
 # install Composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php

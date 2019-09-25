@@ -7,11 +7,10 @@ https://qiita.com/kumanizm/items/3e826ff278296f0960ea
 Clone Docker files
 https://github.com/webkul/magento2-varnish-docker-compose
 
-docker exec -it apache2 bash
-
 ### install Composer
 
 ```text
+docker exec -it apache2 bash
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
@@ -32,7 +31,7 @@ CREATE DATABASE magento DEFAULT CHARACTER SET utf8mb4;
 cd magento
 
 bin/magento setup:install \
---base-url=http://localhost/magento \
+--base-url=http://localhost \
 --db-host=mysql_host \
 --db-name=magento \
 --db-user=root \
@@ -75,6 +74,19 @@ Monitering by redis
 docker exec -it redis_host bash
 redis-cli monitor
 ```
+
+Trouble shoot
+
+If the browser come up these message. 
+```text
+An error has happened during application run. See exception log for details.
+```
+Reset for redis once.
+
+```text
+redis-cli flushall
+```
+
 
 
 This repository corresponds to architecture setup as mentioned in blog https://cloudkul.com/blog/magento-2-docker-compose/.

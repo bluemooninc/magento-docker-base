@@ -1,5 +1,20 @@
 version: '3'
 services:
+  cache_server:
+    build:
+      context: ./cache_server/
+    container_name: varnish
+    depends_on:
+      - web_server
+    volumes:
+      - ./cache_server/default.vcl:/etc/varnish/default.vcl
+      - ./cache_server/varnish:/etc/default/varnish
+      - ./cache_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    ports:
+      - "80:80"
+      - "6082:6082"
+    links:
+      - web_server
   redis:
     image: "redis:latest"
     container_name: redis_host
@@ -10,13 +25,13 @@ services:
 
   web_server:
     # image:->build:に変更してDockerfileの場所を指定
-    build: .
+    build: ./html/
     container_name: apache2
     volumes:
-      - ./php.ini:/usr/local/etc/php/php.ini
-      - ./html:/var/www/html
+      - ./html/php.ini:/usr/local/etc/php/php.ini
+      - ./html/magento:/var/www/html
     ports:
-      - 80:80
+      - 8080:8080
     depends_on:
       - "db"
 
