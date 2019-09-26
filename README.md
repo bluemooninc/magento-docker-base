@@ -47,6 +47,7 @@ CREATE DATABASE magento DEFAULT CHARACTER SET utf8mb4;
 ### Magento set up
 
 ```
+docker exec -it apache2 bash
 cd magento
 
 bin/magento setup:install \
@@ -60,15 +61,17 @@ bin/magento setup:install \
 --admin-email=admin@admin.com \
 --admin-user=admin \
 --admin-password=admin123 \
---language=en_US \
---currency=USD \
---timezone=America/Chicago \
+--language=ja_JP \
+--currency=JPY \
+--timezone=Asia/Tokyo \
 --use-rewrites=1
 
 
 [SUCCESS]: http://localhost/magento/
 [SUCCESS]: http://localhost/magento/admin_?????
 ```
+You can set those parameters after install at core_config_data table.
+
 
 ### Install Cron
 
@@ -114,4 +117,12 @@ You can check it for varnish cache monitoring via "varnishstat" command.
 ```text
 docker exec -it varnish bash
 varnishstat
+```
+
+### install Japanese locale
+
+Using CrowedIn locale file and set up
+
+```text
+composer require community-engineering/language-ja_jp
 ```
